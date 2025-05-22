@@ -1,10 +1,25 @@
+import MainLayout from 'src/layouts/MainLayout.vue';
 import type { RouteRecordRaw } from 'vue-router';
 
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: '', component: () => import('pages/IndexPage.vue') }],
+    component: MainLayout,
+    children: [
+      // put the routes here
+      {
+        path: 'merchant',
+        component: () => import('pages/Merchant/MerchantPage.vue'),
+      },
+      {
+        path: 'add-merchant',
+        component: () => import('pages/Merchant/AddMerchantPage.vue'),
+      },
+      {
+        path: 'view-merchant',
+        component: () => import('pages/Merchant/ViewMerchant.vue'),
+      },
+    ],
   },
 
   // Always leave this as last one,

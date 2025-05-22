@@ -1,0 +1,26 @@
+.app-container{
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+
+    .sidebar_content{
+        background: #F6FBFF;
+        width: 250px;
+        height: 100%;
+    }
+
+    .line_vertical{
+        width: 100%;
+        height: 2px;
+        background: #E4EFFA;
+        margin: 20px 0;
+    }
+    .main-content{
+        background: #FFFFFF;
+        width: calc(100% - 250px);
+        height: 100%;
+        padding: 20px 16px 16px 20px;
+        overflow-y: auto;
+    }
+  
+}
