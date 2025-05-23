@@ -1,7 +1,7 @@
 <template>
   <div class="page-container">
     <div class="page-header">
-      <BaseButton :icon="['fas', 'arrow-left']" :showIcon="true" @click="backMerchant()"
+      <BaseButton type="" :icon="['fas', 'arrow-left']" :showIcon="true" @click="backMerchant()"
         >Back
       </BaseButton>
 

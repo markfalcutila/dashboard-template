@@ -146,17 +146,17 @@ watch(
 }
 
 .status-label {
-  font-weight: 600;
+  font-weight: 400;
   text-transform: capitalize;
   padding: 5px 10px;
   border-radius: 12px;
   background-color: #f6f6f6;
 
-  &.active {
+  &.Active {
     color: green;
   }
 
-  &.inactive {
+  &.Inactive {
     color: red;
   }
 }

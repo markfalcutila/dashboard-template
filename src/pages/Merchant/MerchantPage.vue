@@ -43,14 +43,14 @@
         </template>
 
         <template #cell-status="{ value }">
-          <span :class="['status-label']">
+          <span :class="['status-label', value]">
             {{ value }}
           </span>
         </template>
 
         <template #cell-actions="{ item }">
           <BaseButton
-            type="secondary"
+            type=""
             :icon="['fas', 'pen']"
             :showIcon="true"
             :circle="true"
@@ -59,7 +59,7 @@
           </BaseButton>
 
           <BaseButton
-            type="danger"
+            type=""
             :icon="['fas', 'eye']"
             :showIcon="true"
             :circle="true"
@@ -192,11 +192,11 @@ export default defineComponent({
     editMerchant(item: unknown) {
       console.log('edit merchant:', item);
       // this.editMerchant(item as Merchant);
-      void this.$router.push('view-merchant');
     },
     viewMerchant(item: unknown) {
       // this.viewMerchant(item as Merchant);
       console.log('view merchant:', item);
+      void this.$router.push('view-merchant');
     },
   },
 });
