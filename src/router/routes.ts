@@ -16,8 +16,10 @@ const routes: RouteRecordRaw[] = [
         component: () => import('pages/Merchant/AddMerchantPage.vue'),
       },
       {
+        name: 'view-merchant',
         path: 'view-merchant',
         component: () => import('pages/Merchant/ViewMerchant.vue'),
+        props: true,
       },
     ],
   },

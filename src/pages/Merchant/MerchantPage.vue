@@ -20,8 +20,8 @@
 
         <div class="filter-right">
           <div class="switch-button">
-            <BaseToggle v-model="showActive" />
-            <label>Show active accounts only</label>
+            <BaseToggle v-model="showActive" label="Show active accounts only" />
+            <!-- <label>Show active accounts only</label> -->
           </div>
           <BaseButton
             type="primary"
@@ -107,10 +107,10 @@ export default defineComponent({
         { key: 'id', label: 'ID' },
         { key: 'name', label: 'Name' },
         { key: 'code', label: 'Code' },
-        // { key: 'category', label: 'Category Code' },
-        // { key: 'network', label: 'Card Network' },
-        // { key: 'address', label: 'Address' },
-        // { key: 'lastUpdated', label: 'Last Updated' },
+        { key: 'category', label: 'Category Code' },
+        { key: 'network', label: 'Card Network' },
+        { key: 'address', label: 'Address' },
+        { key: 'lastUpdated', label: 'Last Updated' },
         { key: 'status', label: 'Status' },
         { key: 'actions', label: 'Actions' },
       ],
@@ -194,9 +194,11 @@ export default defineComponent({
       // this.editMerchant(item as Merchant);
     },
     viewMerchant(item: unknown) {
-      // this.viewMerchant(item as Merchant);
-      console.log('view merchant:', item);
-      void this.$router.push('view-merchant');
+      void this.$router.push({
+        name: 'view-merchant',
+        // params: { id: (item as Merchant).id },
+        query: { merchant: JSON.stringify(item) }, // padding object data
+      });
     },
   },
 });

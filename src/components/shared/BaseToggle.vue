@@ -1,5 +1,5 @@
 <template>
-  <button
+  <!-- <button
     class="base-toggle"
     :class="{ on: modelValue, off: !modelValue }"
     @click="$emit('update:modelValue', !modelValue)"
@@ -9,16 +9,31 @@
       :icon="modelValue ? ['fas', 'toggle-on'] : ['fas', 'toggle-off']"
       class="toggle-icon"
     />
-  </button>
+  </button> -->
+
+  <q-toggle :label="label" v-model="model" color="color" />
 </template>
 
 <script setup lang="ts">
-defineProps({
+import { ref, watch } from 'vue';
+
+const props = defineProps({
   modelValue: {
     type: Boolean,
     default: false,
   },
+  label: {
+    type: String,
+    default: '',
+  },
+  color: {
+    type: String,
+    default: 'blue',
+  },
 });
+const emit = defineEmits(['update:modelValue']);
+const model = ref(props.modelValue);
+watch(model, (val) => emit('update:modelValue', val));
 </script>
 
 <style lang="scss" scoped>
