@@ -50,7 +50,7 @@
 
           <li>
             <font-awesome-icon class="icon" :icon="['fas', 'chart-simple']" />
-            <router-link class="nav-link" to="/settings">Transactions</router-link>
+            <router-link class="nav-link" to="/transaction">Transactions</router-link>
           </li>
 
           <li>

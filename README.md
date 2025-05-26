@@ -47,6 +47,8 @@ See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-vite/quasar-
 
 ### Run scss code / convert scss into css code
 
-### right click the assets/styles folder and click open terminal and run this command:
+right click the assets/styles folder and click open terminal and run this command:
 
+```bash
 sass --watch scss/main.scss:css/main.css
+```

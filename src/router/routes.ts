@@ -21,6 +21,13 @@ const routes: RouteRecordRaw[] = [
         component: () => import('pages/Merchant/ViewMerchant.vue'),
         props: true,
       },
+
+      // transaction routes
+      {
+        name: 'transaction',
+        path: 'transaction',
+        component: () => import('pages/Transactions/TransactionPage.vue'),
+      },
     ],
   },
 
