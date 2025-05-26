@@ -35,9 +35,10 @@ defineProps({
 <style lang="scss" scoped>
 .base-button {
   padding: 0.5rem 1rem;
+  padding: 10px 15px;
   border: none;
   border-radius: 4px;
-  font-size: 12px;
+  font-size: var(--font-small);
   cursor: pointer;
   transition: 0.3s;
   width: auto;

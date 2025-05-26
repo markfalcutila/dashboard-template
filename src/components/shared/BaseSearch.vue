@@ -24,7 +24,7 @@ defineProps({
 <style lang="scss" scoped>
 .base-search {
   border: 1px solid var(--light-gray);
-  padding: 5px;
+  padding: 5px 15px;
   border-radius: 8px;
   display: flex;
   align-items: center;

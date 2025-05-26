@@ -19,18 +19,14 @@
         </div>
 
         <div class="filter-right">
-          <div class="switch-button">
-            <BaseToggle v-model="showActive" label="Show active accounts only" />
-            <!-- <label>Show active accounts only</label> -->
-          </div>
           <BaseButton
             type="primary"
-            :icon="['fas', 'plus']"
+            :icon="['fas', 'arrow-up-from-bracket']"
             :showIcon="true"
             :fullWidth="false"
             @click="goToAddMerchant"
           >
-            Add merchant
+            Generate Report
           </BaseButton>
         </div>
       </div>
@@ -63,7 +59,6 @@ import { defineComponent } from 'vue';
 import BaseButton from 'components/shared/BaseButton.vue';
 import BaseSearch from 'components/shared/BaseSearch.vue';
 import BaseTable from 'components/shared/BaseTable.vue';
-import BaseToggle from 'components/shared/BaseToggle.vue';
 
 interface Transaction {
   id: number;
@@ -80,7 +75,6 @@ export default defineComponent({
   components: {
     BaseSearch,
     BaseButton,
-    BaseToggle,
     BaseTable,
   },
   data() {
@@ -107,7 +101,7 @@ export default defineComponent({
           transactionType: 'Sale',
         },
         {
-          id: 1,
+          id: 2,
           transactionId: '123456789',
           amount: 999,
           status: 'Sent',
@@ -116,7 +110,7 @@ export default defineComponent({
           transactionType: 'Sale',
         },
         {
-          id: 1,
+          id: 3,
           transactionId: '123456789',
           amount: 999,
           status: 'Sent',
@@ -125,7 +119,7 @@ export default defineComponent({
           transactionType: 'Sale',
         },
         {
-          id: 1,
+          id: 4,
           transactionId: '123456789',
           amount: 999,
           status: 'Sent',
@@ -134,7 +128,7 @@ export default defineComponent({
           transactionType: 'Sale',
         },
         {
-          id: 1,
+          id: 5,
           transactionId: '123456789',
           amount: 999,
           status: 'Sent',
@@ -143,7 +137,7 @@ export default defineComponent({
           transactionType: 'Sale',
         },
         {
-          id: 1,
+          id: 6,
           transactionId: '123456789',
           amount: 999,
           status: 'Sent',
@@ -159,8 +153,13 @@ export default defineComponent({
       //   this.$router.push({ name: 'AddMerchant' });
       console.log('Add Merchant button clicked');
     },
-    viewTransaction(item: unknown) {
+    async viewTransaction(item: unknown) {
       console.log('view transaction:', item);
+      await this.$router.push({
+        name: 'view-transaction',
+        // params: { id: (item as Transaction).id },
+        query: { transaction: JSON.stringify(item) }, // padding object data
+      });
     },
   },
 });

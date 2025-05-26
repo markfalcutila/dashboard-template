@@ -1,41 +1,41 @@
-:root{
-    --primary-color: #069206;
-    --primary-hover: #207e20;
-    --lime-green: #BAF3A5;
+:root {
+  --primary-color: #069206;
+  --primary-hover: #207e20;
 
-    --white: #FFFFFF;
-    --black: #000000;
+  --secondary-color: #194d72;
+  --secondary-hover: #1a5b8a;
 
-    --dark-gray: #333333;
-    --light-gray: #D8D8D8;
+  --lime-green: #baf3a5;
 
+  --white: #ffffff;
+  --black: #000000;
 
-    --red: #E26365;
-    --dark-blue: #0D4775;
-    
-    --blue: #5D67D5;
+  --dark-gray: #333333;
+  --light-gray: #d8d8d8;
 
-    /* font family */
-    --poppins: "Poppins", sans-serif;
+  --red: #e26365;
+  --dark-blue: #0d4775;
 
-    /* font weight */
-    --fw300: 300;
-    --fw400: 400;
-    --fw500: 500;
-    --fw600: 600;
-    --fw700: 700;
-    --fw800: 800;
-    --fw900: 900;
+  --blue: #5d67d5;
 
-    // font height  
-    --font-xl: 20px;
-    --font-large: 16px;
-    --font-medium: 14px;
-    --font-small: 12px;
+  /* font family */
+  --poppins: 'Poppins', sans-serif;
 
+  /* font weight */
+  --fw300: 300;
+  --fw400: 400;
+  --fw500: 500;
+  --fw600: 600;
+  --fw700: 700;
+  --fw800: 800;
+  --fw900: 900;
 
+  // font height
+  --font-xl: 20px;
+  --font-large: 16px;
+  --font-medium: 14px;
+  --font-small: 12px;
 
-    // background 
-    --bg-light: #F9F9F9;
-
+  // background
+  --bg-light: #f9f9f9;
 }

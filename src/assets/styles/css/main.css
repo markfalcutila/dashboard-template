@@ -3,14 +3,16 @@
 :root {
   --primary-color: #069206;
   --primary-hover: #207e20;
-  --lime-green: #BAF3A5;
-  --white: #FFFFFF;
+  --secondary-color: #194d72;
+  --secondary-hover: #1a5b8a;
+  --lime-green: #baf3a5;
+  --white: #ffffff;
   --black: #000000;
   --dark-gray: #333333;
-  --light-gray: #D8D8D8;
-  --red: #E26365;
-  --dark-blue: #0D4775;
-  --blue: #5D67D5;
+  --light-gray: #d8d8d8;
+  --red: #e26365;
+  --dark-blue: #0d4775;
+  --blue: #5d67d5;
   /* font family */
   --poppins: "Poppins", sans-serif;
   /* font weight */
@@ -25,7 +27,7 @@
   --font-large: 16px;
   --font-medium: 14px;
   --font-small: 12px;
-  --bg-light: #F9F9F9;
+  --bg-light: #f9f9f9;
 }
 
 .sidebar {
@@ -476,6 +478,64 @@
   margin-bottom: 10px;
 }
 
+.transaction-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin: 0 10px;
+  font-size: var(--font-large);
+}
+.transaction-header .trx-id {
+  color: var(--secondary-color);
+  font-weight: var(--fw500);
+}
+
+.transcation-header-details {
+  margin-top: 50px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+.transcation-header-details .details-container {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: auto;
+  padding: 0 5px 0 10px;
+  border-right: 1px solid var(--light-gray);
+}
+.transcation-header-details .details-container:last-child {
+  border: none;
+}
+.transcation-header-details .details-container .title {
+  font-size: var(--font-small);
+  font-weight: var(--fw400);
+}
+.transcation-header-details .details-container .value {
+  font-size: var(--font-large);
+  font-weight: var(--fw600);
+}
+
+.form-details {
+  display: flex;
+  flex-direction: column;
+  margin: 20px 0;
+}
+.form-details .form-header {
+  font-size: var(--font-large);
+}
+.form-details .form-details-container {
+  display: flex;
+  font-size: var(--font-medium);
+  margin: 10px 0;
+  align-items: center;
+}
+.form-details .form-details-container .form-title {
+  color: var(--gray);
+}
+.form-details .form-details-container .form-value {
+  font-weight: var(--fw500);
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -490,6 +550,13 @@ body {
 
 p {
   margin: 0;
+}
+
+.border-vertical {
+  border-top: 1px solid var(--light-gray);
+  height: 5px;
+  width: 100%;
+  margin: 10px 0;
 }
 
 /*# sourceMappingURL=main.css.map */

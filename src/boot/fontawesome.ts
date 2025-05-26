@@ -15,6 +15,7 @@ import {
   faPen,
   faArrowRight,
   faArrowLeft,
+  faArrowUpFromBracket,
 } from '@fortawesome/free-solid-svg-icons';
 
 export default ({ app }: { app: App }) => {
@@ -31,6 +32,7 @@ export default ({ app }: { app: App }) => {
     faPen,
     faArrowRight,
     faArrowLeft,
+    faArrowUpFromBracket,
   );
 
   app.component('font-awesome-icon', FontAwesomeIcon);

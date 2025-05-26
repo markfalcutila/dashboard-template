@@ -28,6 +28,12 @@ const routes: RouteRecordRaw[] = [
         path: 'transaction',
         component: () => import('pages/Transactions/TransactionPage.vue'),
       },
+      {
+        name: 'view-transaction',
+        path: 'view-transaction',
+        component: () => import('pages/Transactions/ViewTransaction.vue'),
+        props: true,
+      },
     ],
   },
 
