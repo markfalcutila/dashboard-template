@@ -32,7 +32,7 @@
       </div>
 
       <!-- Table -->
-      <BaseTable :headers="headers" :items="transactions" :items-per-page="5">
+      <BaseTable :headers="headers" :items="filteredTransactions" :items-per-page="5">
         <template #cell-status="{ value }">
           <span :class="['status-label', value]">
             {{ value }}
@@ -102,7 +102,7 @@ export default defineComponent({
         },
         {
           id: 2,
-          transactionId: '123456789',
+          transactionId: '001122',
           amount: 999,
           status: 'Sent',
           datePaid: 'April 29, 2023',
@@ -160,6 +160,16 @@ export default defineComponent({
         // params: { id: (item as Transaction).id },
         query: { transaction: JSON.stringify(item) }, // padding object data
       });
+    },
+  },
+  computed: {
+    filteredTransactions(): Record<string, unknown>[] {
+      if (!this.search.trim()) return this.transactions as Record<string, unknown>[];
+
+      const searchTerm = this.search.toLowerCase();
+      return this.transactions.filter((tx) =>
+        Object.values(tx).some((value) => String(value).toLowerCase().includes(searchTerm)),
+      ) as Record<string, unknown>[];
     },
   },
 });

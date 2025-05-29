@@ -31,27 +31,27 @@
 
         <div class="details-container">
           <span class="title">TRANSACTION ID</span>
-          <span class="value">P {{ transaction?.transactionId }}</span>
+          <span class="value"> {{ transaction?.transactionId }}</span>
         </div>
 
         <div class="details-container">
           <span class="title">DATE PAID</span>
-          <span class="value">P {{ transaction?.datePaid }}</span>
+          <span class="value"> {{ transaction?.datePaid }}</span>
         </div>
 
         <div class="details-container">
           <span class="title">PAYMENT NETWORK</span>
-          <span class="value">P {{ transaction?.cardNetwork }}</span>
+          <span class="value"> {{ transaction?.cardNetwork }}</span>
         </div>
 
         <div class="details-container">
           <span class="title">TRANSACTION TYPE</span>
-          <span class="value">P {{ transaction?.transactionType }}</span>
+          <span class="value"> {{ transaction?.transactionType }}</span>
         </div>
 
         <div class="details-container">
           <span class="title">STATUS</span>
-          <span class="value">P {{ transaction?.status }}</span>
+          <span class="value"> {{ transaction?.status }}</span>
         </div>
 
         <div class="details-container">

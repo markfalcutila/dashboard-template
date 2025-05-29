@@ -36,7 +36,7 @@
       </div>
 
       <!-- Table -->
-      <BaseTable :headers="headers" :items="merchants" :items-per-page="5">
+      <BaseTable :headers="headers" :items="filteredMerchants" :items-per-page="5">
         <template #cell-address="{ item }">
           <div>{{ item.city }}</div>
           <div>{{ item.country }}</div>
@@ -196,9 +196,19 @@ export default defineComponent({
     viewMerchant(item: unknown) {
       void this.$router.push({
         name: 'view-merchant',
-        // params: { id: (item as Merchant).id },
-        query: { merchant: JSON.stringify(item) }, // padding object data
+        params: { id: (item as Merchant).id },
+        // query: { merchant: JSON.stringify(item) }, // padding object data
       });
+    },
+  },
+  computed: {
+    filteredMerchants(): Record<string, unknown>[] {
+      if (!this.search.trim()) return this.merchants as Record<string, unknown>[];
+
+      const searchTerm = this.search.toLowerCase();
+      return this.merchants.filter((tx) =>
+        Object.values(tx).some((value) => String(value).toLowerCase().includes(searchTerm)),
+      ) as Record<string, unknown>[];
     },
   },
 });
