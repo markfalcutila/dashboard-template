@@ -13,203 +13,207 @@
         <div class="filter-left">
           <div class="filter">
             <label class="filter-button">Filter(0)</label>
-            <font-awesome-icon class="icon" :icon="['fas', 'chevron-down']" />
+            <!-- <font-awesome-icon class="icon" :icon="['fas', 'chevron-down']" /> -->
           </div>
-          <BaseSearch v-model="search" />
+          <CustomSearch v-model="search" />
         </div>
 
         <div class="filter-right">
           <div class="switch-button">
-            <BaseToggle v-model="showActive" label="Show active accounts only" />
+            <CustomToggle v-model="showActive" label="Show active accounts only" />
             <!-- <label>Show active accounts only</label> -->
           </div>
-          <BaseButton
+
+          <CustomButton
             type="primary"
-            :icon="['fas', 'plus']"
+            :icon="'add'"
             :showIcon="true"
             :fullWidth="false"
-            @click="goToAddMerchant"
+            @click="addMerchant"
           >
             Add merchant
-          </BaseButton>
+          </CustomButton>
         </div>
       </div>
 
       <!-- Table -->
-      <BaseTable :headers="headers" :items="filteredMerchants" :items-per-page="5">
-        <template #cell-address="{ item }">
-          <div>{{ item.city }}</div>
-          <div>{{ item.country }}</div>
+      <q-table
+        flat
+        bordered
+        class="custom-q-table q-mt-md"
+        :rows="filteredMerchants"
+        :columns="columns"
+        row-key="id"
+        v-model:pagination="pagination"
+        :loading="loading"
+        :rows-per-page-options="[5, 10, 25]"
+        @request="listMerchants({ pagination })"
+      >
+        <!-- Enabled Column Customization -->
+        <template #body-cell-isEnabled="{ value }">
+          <td>
+            <div class="status-container">
+              <span :class="['status-label', value ? 'Active' : 'Inactive']">
+                {{ value ? 'Active' : 'Inactive' }}
+              </span>
+            </div>
+          </td>
         </template>
 
-        <template #cell-status="{ value }">
-          <span :class="['status-label', value]">
-            {{ value }}
-          </span>
-        </template>
+        <!-- Actions Column -->
+        <template #body-cell-actions="{ row }">
+          <td>
+            <div>
+              <CustomButton
+                :icon="'edit'"
+                type="secondary"
+                :showIcon="true"
+                :circle="true"
+                :fullHeight="true"
+                @click="editMerchant(row)"
+              />
 
-        <template #cell-actions="{ item }">
-          <BaseButton
-            type=""
-            :icon="['fas', 'pen']"
-            :showIcon="true"
-            :circle="true"
-            @click="editMerchant(item)"
-          >
-          </BaseButton>
-
-          <BaseButton
-            type=""
-            :icon="['fas', 'eye']"
-            :showIcon="true"
-            :circle="true"
-            @click="viewMerchant(item)"
-          >
-          </BaseButton>
+              <CustomButton
+                :icon="'visibility'"
+                type="primary"
+                :showIcon="true"
+                :circle="true"
+                @click="viewMerchant(row)"
+              />
+            </div>
+          </td>
         </template>
-      </BaseTable>
+      </q-table>
     </div>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-import BaseButton from 'components/shared/BaseButton.vue';
-import BaseSearch from 'components/shared/BaseSearch.vue';
-import BaseTable from 'components/shared/BaseTable.vue';
-import BaseToggle from 'components/shared/BaseToggle.vue';
+<script setup lang="ts">
+import CustomButton from 'components/shared/CustomButton.vue';
+import CustomSearch from 'components/shared/CustomSearch.vue';
+import CustomToggle from 'components/shared/CustomToggle.vue';
 
-interface Merchant {
-  id: number;
-  name: string;
-  code: string;
-  category: string;
-  network: string;
-  city: string;
-  country: string;
-  lastUpdated: string;
-  status: string;
+import { ref, computed, onMounted } from 'vue';
+import { useQuasar } from 'quasar';
+import { useRouter } from 'vue-router';
+// import type { MerchantModel } from 'src/types/merchant';
+
+const $q = useQuasar();
+const router = useRouter();
+
+const merchants = ref<any[]>([
+  {
+    id: 1,
+    code: 'MRC001',
+    name: 'Acme Corp',
+    isEnabled: true,
+  },
+  {
+    id: 2,
+    code: 'MRC002',
+    name: 'Beta Traders',
+    isEnabled: false,
+  },
+  {
+    id: 3,
+    code: 'MRC003',
+    name: 'Gamma Supplies',
+    isEnabled: true,
+  },
+  {
+    id: 4,
+    code: 'MRC004',
+    name: 'Delta Services',
+    isEnabled: true,
+  },
+  {
+    id: 5,
+    code: 'MRC005',
+    name: 'Epsilon Goods',
+    isEnabled: false,
+  },
+]);
+const loading = ref(false);
+const search = ref('');
+const showActive = ref(false);
+
+const pagination = ref({
+  page: 1,
+  rowsPerPage: 5,
+  rowsNumber: 0,
+  sortBy: 'code',
+  descending: false,
+});
+
+const filters = ref({
+  code: '',
+  name: '',
+});
+
+const columns = ref([
+  { name: 'code', label: 'Merchant Code', field: 'code', sortable: true },
+  { name: 'name', label: 'Merchant Name', field: 'name', sortable: true },
+  { name: 'isEnabled', label: 'Status', field: 'isEnabled', sortable: true },
+  { name: 'actions', label: 'Actions', field: 'actions', sortable: false },
+]);
+
+onMounted(() => {
+  listMerchants({ pagination: pagination.value });
+});
+
+function listMerchants({ pagination: p }: { pagination: any }) {
+  loading.value = true;
+  try {
+    const params = {
+      pageNo: p.page,
+      pageSize: p.rowsPerPage,
+      merchantCode: filters.value.code,
+      merchantName: filters.value.name,
+      sortBy: p.sortBy,
+      descending: p.descending,
+    };
+    // const res = await MerchantService.getMerchants(params);
+    // merchants.value = res.merchants;
+    // pagination.value = { ...p, rowsNumber: res.totalElements };
+  } catch (err) {
+    $q.notify({ type: 'negative', message: 'Failed to load merchants' });
+    console.error(err);
+  } finally {
+    loading.value = false;
+  }
 }
 
-export default defineComponent({
-  name: 'MerchantPage',
-  components: {
-    BaseSearch,
-    BaseButton,
-    BaseToggle,
-    BaseTable,
-  },
-  data() {
-    return {
-      search: '',
-      showActive: true,
-      headers: [
-        { key: 'id', label: 'ID' },
-        { key: 'name', label: 'Name' },
-        { key: 'code', label: 'Code' },
-        { key: 'category', label: 'Category Code' },
-        { key: 'network', label: 'Card Network' },
-        { key: 'address', label: 'Address' },
-        { key: 'lastUpdated', label: 'Last Updated' },
-        { key: 'status', label: 'Status' },
-        { key: 'actions', label: 'Actions' },
-      ],
-      // default data
-      merchants: [
-        {
-          id: 1,
-          name: 'Merchant 1',
-          code: 'M001',
-          category: 'A',
-          network: 'Visa',
-          city: 'New York',
-          country: 'USA',
-          lastUpdated: '2024-05-20',
-          status: 'Active',
-        },
-        {
-          id: 2,
-          name: 'Merchant 2',
-          code: 'M002',
-          category: 'B',
-          network: 'Mastercard',
-          city: 'London',
-          country: 'UK',
-          lastUpdated: '2024-05-18',
-          status: 'Inactive',
-        },
-        {
-          id: 3,
-          name: 'Merchant 3',
-          code: 'M003',
-          category: 'C',
-          network: 'Amex',
-          city: 'Tokyo',
-          country: 'Japan',
-          lastUpdated: '2024-05-15',
-          status: 'Active',
-        },
-        {
-          id: 4,
-          name: 'Merchant 4',
-          code: 'M002',
-          category: 'C',
-          network: 'Amex',
-          city: 'Tokyo',
-          country: 'Japan',
-          lastUpdated: '2024-05-15',
-          status: 'Active',
-        },
-        {
-          id: 5,
-          name: 'Merchant 5',
-          code: 'M005',
-          category: 'C',
-          network: 'Amex',
-          city: 'Tokyo',
-          country: 'Japan',
-          lastUpdated: '2024-05-15',
-          status: 'Active',
-        },
-        {
-          id: 6,
-          name: 'Merchant 6',
-          code: 'M006',
-          category: 'C',
-          network: 'Amex',
-          city: 'Tokyo',
-          country: 'Japan',
-          lastUpdated: '2024-05-15',
-          status: 'Active',
-        },
-      ] as Merchant[],
-    };
-  },
-  methods: {
-    goToAddMerchant() {
-      void this.$router.push('/add-merchant');
-    },
-    editMerchant(item: unknown) {
-      console.log('edit merchant:', item);
-      // this.editMerchant(item as Merchant);
-    },
-    viewMerchant(item: unknown) {
-      void this.$router.push({
-        name: 'view-merchant',
-        params: { id: (item as Merchant).id },
-        // query: { merchant: JSON.stringify(item) }, // padding object data
-      });
-    },
-  },
-  computed: {
-    filteredMerchants(): Record<string, unknown>[] {
-      if (!this.search.trim()) return this.merchants as Record<string, unknown>[];
+function addMerchant() {
+  void router.push('add-merchant');
+  // void router.push('/add-merchant');
+}
 
-      const searchTerm = this.search.toLowerCase();
-      return this.merchants.filter((tx) =>
-        Object.values(tx).some((value) => String(value).toLowerCase().includes(searchTerm)),
-      ) as Record<string, unknown>[];
-    },
-  },
+async function editMerchant(row: any) {
+  await router.push({
+    name: 'update-merchant',
+    params: { id: row.id },
+  });
+}
+
+function viewMerchant(item: unknown) {
+  console.log('view merchant:', item);
+}
+
+const filteredMerchants = computed(() => {
+  let list = merchants.value;
+  // Show only active merchants if toggle is on
+  if (showActive.value) {
+    list = list.filter((merchant) => merchant.isEnabled === true);
+  }
+  // Search by code or name
+  if (search.value.trim()) {
+    const searchTerm = search.value.toLowerCase();
+    list = list.filter(
+      (merchant) =>
+        merchant.code.toLowerCase().includes(searchTerm) ||
+        merchant.name.toLowerCase().includes(searchTerm),
+    );
+  }
+  return list;
 });
 </script>

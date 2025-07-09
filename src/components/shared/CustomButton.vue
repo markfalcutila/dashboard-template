@@ -1,6 +1,15 @@
 <template>
-  <button :class="['base-button', type, { 'full-width': fullWidth }, { 'btn-circle': circle }]">
-    <font-awesome-icon v-if="showIcon && icon" class="icon" :icon="icon" />
+  <button
+    :class="[
+      'base-button',
+      type,
+      { 'full-width': fullWidth },
+      { 'full-height': fullHeight },
+      { 'btn-circle': circle },
+    ]"
+  >
+    <!-- <font-awesome-icon v-if="showIcon && icon" class="icon" :icon="icon" /> -->
+    <q-icon v-if="showIcon && icon" class="icon" :name="icon" />
     <span>
       <slot />
     </span>
@@ -14,7 +23,7 @@ defineProps({
     default: 'primary',
   },
   icon: {
-    type: [Array, String],
+    type: String,
     default: null,
   },
   showIcon: {
@@ -22,6 +31,10 @@ defineProps({
     default: false,
   },
   fullWidth: {
+    type: Boolean,
+    default: false,
+  },
+  fullHeight: {
     type: Boolean,
     default: false,
   },
@@ -42,20 +55,32 @@ defineProps({
   cursor: pointer;
   transition: 0.3s;
   width: auto;
+  height: auto;
   margin: 0 2px;
 
   svg {
-    font-size: 12px;
+    font-size: 14px;
     margin-right: 5px;
   }
 
+  .icon {
+    font-size: var(--font-medium);
+  }
+
   &.primary {
-    background-color: green;
+    background-color: var(--primary-color);
     color: #fff;
+
+    :hover {
+      background-color: var(--primary-color-hover);
+    }
   }
   &.secondary {
-    background-color: red !important;
+    background-color: var(--secondary-color);
     color: #fff;
+    :hover {
+      background-color: var(--secondary-color-hover);
+    }
   }
 
   &.secondary {
@@ -70,6 +95,9 @@ defineProps({
 
 .full-width {
   width: 100%;
+}
+.full-height {
+  height: 100%;
 }
 .btn-circle {
   border-radius: 50%;

@@ -28,6 +28,7 @@
       v-model="modelValue"
       :class="['form-input', sizeClass]"
       :required="!!required"
+      :disabled="!!disabled"
     />
   </div>
 </template>
@@ -43,6 +44,7 @@ const props = defineProps<{
   size?: 'sm' | 'md' | 'lg';
   modelValue?: string | number | boolean;
   required?: boolean;
+  disabled?: boolean;
 }>();
 
 const emit = defineEmits(['update:modelValue']);

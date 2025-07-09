@@ -46,7 +46,7 @@ import { defineComponent, ref, toRaw } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import BaseButton from 'components/shared/BaseButton.vue';
 import CustomTabs from 'components/shared/CustomTabs.vue';
-import type { Merchant } from 'src/types/merchant';
+import type { MerchantModel } from 'src/types/merchant';
 
 export default defineComponent({
   name: 'ViewMerchantPage',
@@ -57,7 +57,7 @@ export default defineComponent({
   setup() {
     const route = useRoute();
     const router = useRouter();
-    const merchant = ref<Merchant | null>(null);
+    const merchant = ref<MerchantModel | null>(null);
 
     if (route.query.merchant && typeof route.query.merchant === 'string') {
       try {
@@ -79,7 +79,7 @@ export default defineComponent({
       { key: 'country', label: 'Country' },
       { key: 'lastUpdated', label: 'Last Updated' },
       { key: 'status', label: 'Status' },
-    ] as { key: keyof Merchant; label: string }[];
+    ] as { key: keyof MerchantModel; label: string }[];
 
     const backMerchant = () => {
       router.push('/merchant').catch((err) => {

@@ -1,0 +1,48 @@
+.custom-q-table {
+  th {
+    text-transform: uppercase;
+    background-color: #f9f9f9;
+    font-weight: 500;
+    text-align: left;
+    // font-size: var(--font-medium);
+  }
+
+  td {
+    font-weight: 300;
+    text-align: left;
+  }
+
+  th,
+  td {
+    padding: 7px 10px;
+  }
+
+  .status-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+  .status-label {
+    font-weight: 400;
+    text-transform: capitalize;
+    padding: 5px 10px;
+    border-radius: 12px;
+    background-color: #f6f6f6;
+
+    &.Active {
+      color: green;
+    }
+
+    &.Inactive {
+      color: red;
+    }
+  }
+
+  .q-table-pagination-footer {
+    font-size: 0.9rem;
+
+    .q-pagination {
+      margin-top: 0.5rem;
+    }
+  }
+}

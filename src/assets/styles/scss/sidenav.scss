@@ -69,18 +69,18 @@
         display: flex;
         align-items: center;
         gap: 10px;
-        margin: 15px 0;
+        margin: 20px 0;
         cursor: pointer;
 
         .icon {
-          font-size: 14px;
+          font-size: var(--font-large);
           color: var(--dark-gray);
           // border: 1px solid red;
         }
 
         .nav-link {
           font-size: var(--font-large);
-          font-weight: 400;
+          font-weight: var(--fw400);
           text-decoration: none;
           transition: color 0.3s ease;
           color: var(--dark-gray);
@@ -102,6 +102,8 @@
         flex-direction: column;
         align-items: start;
         width: 100%;
+        font-size: var(--font-large);
+        font-weight: var(--fw400);
 
         .drawer-container {
           display: flex;
@@ -122,7 +124,8 @@
           width: 100%;
 
           li {
-            padding: 5px 0;
+            padding: 2px 0;
+            margin: 5px 0;
             // font-size: 0.9rem;
 
             .nav-link {

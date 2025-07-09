@@ -8,9 +8,8 @@
         </div>
 
         <div class="user_container">
-          <!-- <p>Resty Joy Antiquin</p> -->
           <p>Admin user</p>
-          <font-awesome-icon class="icon" :icon="['fas', 'chevron-down']" />
+          <q-icon name="expand_more" class="icon" />
         </div>
 
         <div class="line_vertical"></div>
@@ -19,43 +18,43 @@
       <!-- Navigation Links -->
       <nav>
         <ul>
-          <!-- Dashboard Link -->
-          <li>
-            <!-- <font-awesome-icon class="icon" :icon="['fas', 'tachometer-alt']" /> -->
-            <font-awesome-icon class="icon" :icon="['fas', 'border-all']" />
-            <router-link class="nav-link" to="/">Dashboard</router-link>
-          </li>
+          <li
+            v-for="(item, index) in menuItems"
+            :key="item.title"
+            :class="{ 'has-drawer': item.children }"
+          >
+            <!-- Regular Menu Item -->
+            <template v-if="!item.children">
+              <q-icon :name="item.icon" class="icon" />
+              <router-link v-if="item.to" class="nav-link" :to="item.to">{{
+                item.title
+              }}</router-link>
+              <span v-else class="nav-link">{{ item.title }}</span>
+            </template>
 
-          <li>
-            <font-awesome-icon class="icon" :icon="['fas', 'store']" />
-            <router-link class="nav-link" to="/merchant">Merchants</router-link>
-          </li>
-
-          <!-- Dropdown Menu (Drawer) -->
-          <!-- <li @click="toggleDrawer" class="has-drawer">
-            <div class="drawer-container">
-              <div class="drawer-left">
-                <font-awesome-icon class="icon" :icon="['fas', 'store']" />
-                <span>Merchants</span>
+            <!-- Dropdown Menu -->
+            <template v-else>
+              <div @click="toggleDrawer(index)" class="drawer-container">
+                <div class="drawer-left">
+                  <q-icon :name="item.icon" class="icon" />
+                  <span>{{ item.title }}</span>
+                </div>
+                <q-icon
+                  name="expand_more"
+                  class="icon"
+                  :class="{ 'rotate-180': openDropdownIndex === index }"
+                />
               </div>
-              <font-awesome-icon class="icon" :icon="['fas', 'chevron-down']" />
-            </div> -->
 
-          <!-- Nested Drawer (Sub-menu) -->
-          <!-- <ul v-show="isDrawerOpen" class="drawer">
-              <li><router-link class="nav-link" to="/merchant">All</router-link></li>
-              <li><router-link class="nav-link" to="/">Pending</router-link></li>
-            </ul>
-          </li> -->
-
-          <li>
-            <font-awesome-icon class="icon" :icon="['fas', 'chart-simple']" />
-            <router-link class="nav-link" to="/transaction">Transactions</router-link>
-          </li>
-
-          <li>
-            <font-awesome-icon class="icon" :icon="['fas', 'cogs']" />
-            <router-link class="nav-link" to="/settings">Configuration</router-link>
+              <!-- Nested Sub-menu -->
+              <ul v-show="openDropdownIndex === index" class="drawer">
+                <li v-for="(child, childIdx) in item.children" :key="childIdx">
+                  <router-link class="nav-link" :to="child.to">
+                    {{ child.title }}
+                  </router-link>
+                </li>
+              </ul>
+            </template>
           </li>
         </ul>
       </nav>
@@ -69,17 +68,59 @@
 </template>
 
 <script lang="ts">
-export default {
-  name: 'AppSidebar',
-  data() {
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  name: 'SideNavbar',
+
+  setup() {
+    const openDropdownIndex = ref<number | null>(null);
+
+    const menuItems = [
+      {
+        title: 'Dashboard',
+        icon: 'grid_view',
+        to: '/dashboard',
+      },
+      {
+        title: 'User Management',
+        icon: 'manage_accounts',
+        to: '/user-management',
+      },
+      {
+        title: 'Merchants',
+        icon: 'storefront',
+        to: '/merchant',
+      },
+      {
+        title: 'Transactions',
+        icon: 'payments',
+        to: '/transaction',
+      },
+      {
+        title: 'Configuration',
+        icon: 'tune',
+        // to: '/settings',
+        children: [{ title: 'sample child', to: '/sample-page' }],
+      },
+      {
+        title: 'Logout',
+        icon: 'logout',
+        // to: '/settings',
+      },
+    ];
+
+    const toggleDrawer = (index: number) => {
+      openDropdownIndex.value = openDropdownIndex.value === index ? null : index;
+    };
+
     return {
-      isDrawerOpen: false, // State to control the visibility of the drawer
+      menuItems,
+      toggleDrawer,
+      openDropdownIndex,
     };
   },
-  methods: {
-    toggleDrawer() {
-      this.isDrawerOpen = !this.isDrawerOpen; // Toggle the drawer state
-    },
-  },
-};
+});
 </script>
+
+<style scoped></style>

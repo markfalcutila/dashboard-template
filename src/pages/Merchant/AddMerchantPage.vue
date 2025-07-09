@@ -1,9 +1,9 @@
 <template>
   <div class="page-container">
     <div class="page-header">
-      <BaseButton type="" :icon="['fas', 'arrow-left']" :showIcon="true" @click="backMerchant()"
+      <CustomButton type="" :icon="'arrow_back'" :showIcon="true" @click="backMerchant()"
         >Back
-      </BaseButton>
+      </CustomButton>
 
       <h1 class="title-header" style="margin-top: 20px">Add Merchant</h1>
       <p>
@@ -151,30 +151,32 @@
         <span class="btn-desc"
           >Ensure your details are accurate for a seamless verification process.</span
         >
-        <BaseButton
+        <CustomButton
           type="primary"
-          :icon="['fas', 'arrow-right-long']"
-          :showIcon="true"
+          :icon="'add'"
+          :showIcon="false"
           :fullWidth="false"
+          @click="onclick_continue()"
         >
           Continue
-        </BaseButton>
+        </CustomButton>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import BaseButton from 'components/shared/BaseButton.vue';
+import CustomButton from 'components/shared/CustomButton.vue';
 import FormInput from 'components/shared/FormInput.vue';
+import { MessageBoxType, MessageType } from 'src/enums/message-box.enums';
+import { MessageBoxService } from 'src/services/message-box.service';
+// import { MessageBoxService } from 'src/services/message-box.service';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'MerchantPage',
   components: {
-    // BaseSearch,
-    BaseButton,
-    // BaseToggle,
+    CustomButton,
     FormInput,
   },
   data() {
@@ -213,6 +215,15 @@ export default defineComponent({
   methods: {
     backMerchant() {
       void this.$router.push('/merchant');
+    },
+    async onclick_continue() {
+      // SAMPLE USE OF MESSAGE BOX SERVICE
+      await MessageBoxService.messageBox(
+        'success',
+        'succssfully added',
+        MessageType.SUCCESS,
+        MessageBoxType.OK,
+      );
     },
   },
 });

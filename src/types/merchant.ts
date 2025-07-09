@@ -1,12 +1,28 @@
-export interface Merchant {
+export interface MerchantModel {
   id: number;
-  name: string;
   code: string;
-  category: string;
-  network: string;
-  city: string;
-  country: string;
-  lastUpdated: string;
-  status: string;
-  [key: string]: unknown; // <-- this allows any other keys as well
+  name: string;
+  isEnabled: boolean;
+  merchantPaymentMethods?: any[];
+}
+
+export interface CreateMerchantInputModel {
+  code: string;
+  name: string;
+  successUrl: string;
+  failUrl: string;
+  webhook: string;
+  isWebhookEnabled: boolean;
+  isEnabled: boolean;
+}
+
+export interface UpdateMerchantInputModel {
+  code: string;
+  name: string;
+  successUrl?: any;
+  failUrl?: any;
+  merchantLogoUrl?: any;
+  webhook?: any;
+  isWebhookEnabled?: any;
+  isEnabled: boolean;
 }

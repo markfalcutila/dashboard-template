@@ -152,11 +152,13 @@ watch(
   border-radius: 12px;
   background-color: #f6f6f6;
 
-  &.Active {
+  &.Active,
+  .True {
     color: green;
   }
 
-  &.Inactive {
+  &.Inactive,
+  .False {
     color: red;
   }
 }

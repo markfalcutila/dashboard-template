@@ -1,6 +1,8 @@
 <template>
   <div class="base-search">
-    <font-awesome-icon class="icon" :icon="['fas', 'magnifying-glass']" />
+    <!-- <font-awesome-icon class="icon" :icon="['fas', 'magnifying-glass']" /> -->
+    <q-icon name="search" class="icon" />
+
     <input
       type="text"
       class="base-search"
@@ -51,7 +53,7 @@ defineProps({
 
   .icon {
     cursor: pointer;
-    font-size: 14px;
+    font-size: var(--font-medium);
     color: var(--dark-gray);
     width: 15px;
     margin-left: 10px;
